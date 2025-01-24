@@ -1,7 +1,7 @@
 "use server"
 import sgMail from '@sendgrid/mail'
-import { createClient } from '@/config/supabase/server'
-import { sendgripApiKey } from '@/config/constants'
+import { createServer } from '@/config/supabase/server'
+import { sendgripApiKey, notificationEmail, systemEmail } from '@/config/constants'
 
 sgMail.setApiKey(sendgripApiKey)
 
@@ -19,7 +19,7 @@ export async function addToWaitlist(data: IContactFormData) {
       return { success: false, message: validationError }
     }
 
-    const supabase = await createClient()
+    const supabase = createServer()
     const response = await supabase
       .from('waitlist')
       .insert({
@@ -39,8 +39,8 @@ export async function addToWaitlist(data: IContactFormData) {
     // Send email notification
     try {
       await sgMail.send({
-        to: 'business@ajianlabs.com',
-        from: 'noreply@ajianlabs.com',
+        to: notificationEmail,
+        from: systemEmail,
         subject: `New Waitlist Signup: ${data.name}`,
         text: `
 Name: ${data.name}
@@ -50,7 +50,6 @@ Message: ${data.message || 'No message provided'}
       })
     } catch (error) {
       console.error('SendGrid error:', error)
-      // Continue execution as email notification is not critical
     }
 
     return { success: true, message: 'Welcome to YurForms! 🎉' }

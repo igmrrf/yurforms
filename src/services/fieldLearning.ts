@@ -23,36 +23,47 @@ export class FieldLearning {
       console.error('Learning error:', error)
     }
   }
-
   static async getPredictedType(label: string): Promise<{
     type: FieldType;
     confidence: number;
   }> {
     try {
-      const { data: patterns } = await this.supabase
+      const { data } = await this.supabase
         .from('field_patterns')
         .select('field_type, confidence')
-        .ilike('pattern', `%${label.toLowerCase()}%`)
+        .ilike('pattern', label.toLowerCase())
         .order('confidence', { ascending: false })
         .limit(1)
-
-      if (patterns && patterns.length > 0) {
-        return {
-          type: patterns[0].field_type as FieldType,
-          confidence: patterns[0].confidence
-        }
-      }
+        .single()
 
       return {
-        type: 'text',
-        confidence: 0
+        type: data?.field_type || 'text',
+        confidence: data?.confidence || 0
       }
     } catch (error) {
       console.error('Prediction error:', error)
-      return {
-        type: 'text',
-        confidence: 0
-      }
+      return { type: 'text', confidence: 0 }
+    }
+  }
+
+
+  static async syncFields(fields: FormField[]) {
+    try {
+      const { error } = await this.supabase
+        .from('field_patterns')
+        .upsert(
+          fields.map(field => ({
+            pattern: field.label.toLowerCase(),
+            field_type: field.type,
+            confidence: 1
+          }))
+        )
+
+      if (error) throw error
+      return true
+    } catch (error) {
+      console.error('Sync error:', error)
+      return false
     }
   }
 

@@ -1,28 +1,27 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { supabaseApiKey, supabaseUrl } from '../constants'
+import { supabaseUrl, supabaseApiKey } from '@/config/constants'
 
-export async function createClient() {
-  const cookieStore = await cookies()
-
-  return createServerClient(supabaseUrl, supabaseApiKey,
+export function createServer() {
+  return createServerClient(
+    supabaseUrl,
+    supabaseApiKey,
     {
       cookies: {
-        getAll() {
-          return cookieStore.getAll()
+        async getAll() {
+          const cookieStore = await cookies()
+          return cookieStore.getAll().map(cookie => ({
+            name: cookie.name,
+            value: cookie.value
+          }))
         },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
-          } catch {
-            // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
-          }
-        },
-      },
+        async setAll(cookieValues) {
+          const cookieStore = await cookies()
+          cookieValues.forEach(({ name, value, ...options }) => {
+            cookieStore.set({ name, value, ...options })
+          })
+        }
+      }
     }
   )
 }

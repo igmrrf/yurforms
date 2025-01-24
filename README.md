@@ -2,26 +2,36 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 # YurForms
 
-Fill a form once, use it everywhere. YurForms is a modern solution that streamlines your workflow by eliminating repetitive form filling.
+> Fill forms once, use them everywhere. YurForms streamlines your workflow by eliminating repetitive form filling with a modern, secure, and user-friendly interface.
 
 ![YurForms](public/globe.svg)
-
-## Overview
-
-YurForms is revolutionizing form management by providing a seamless, efficient way to handle form submissions. Our platform allows users to fill out information once and reuse it across multiple forms, saving valuable time and reducing errors.
+Built with [TRAE](https://trae.ai)
 
 ## Features
 
-- 🔄 Fill forms once, reuse everywhere
-- 🎨 Minimalist, modern design
-- 🌓 Dark/Light mode support
-- 📱 Fully responsive layout
-- 🔒 Secure data handling
-- ⚡ Built with modern tech stack
-- 🌐 Cross-platform compatibility
+### Core Functionality
+- 🤖 AI-Powered Form Detection
+- 🔄 Intelligent Auto-Fill System
+- 📝 Smart Field Type Recognition
+- 🧠 Machine Learning Capabilities
+- 🔄 Cross-Device Synchronization
+
+### Technical Features
+- 🎯 Adaptive Field Matching
+- 🔍 Context-Aware Form Analysis
+- 📊 User Feedback Integration
+- 🛡️ Conflict Resolution System
+- 💾 Offline Support
+- 🔒 Secure Data Storage
+
+### User Experience
+- 🌓 Dark/Light Mode Support
+- 📱 Responsive Design
+- ⚡ Real-Time Form Detection
+- 🎨 Clean, Minimalist Interface
+- 🔐 Privacy-First Approach
 
 ## Tech Stack
-
 - Next.js 14
 - TypeScript
 - Tailwind CSS
@@ -30,17 +40,86 @@ YurForms is revolutionizing form management by providing a seamless, efficient w
 
 ## Getting Started
 
-First, run the development server:
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+## Trae AI
+Used 1 Reference
+
+I'll help you update the documentation to reflect all our implemented features.
+
+First, let's update the README.md:
+
+```markdown
+# YurForms
+
+> Fill forms once, use them everywhere. YurForms streamlines your workflow by eliminating repetitive form filling with a modern, secure, and user-friendly interface.
+
+![YurForms](public/globe.svg)
+Built with [TRAE](https://trae.ai)
+
+## Features
+
+### Core Functionality
+- 🤖 AI-Powered Form Detection
+- 🔄 Intelligent Auto-Fill System
+- 📝 Smart Field Type Recognition
+- 🧠 Machine Learning Capabilities
+- 🔄 Cross-Device Synchronization
+
+### Technical Features
+- 🎯 Adaptive Field Matching
+- 🔍 Context-Aware Form Analysis
+- 📊 User Feedback Integration
+- 🛡️ Conflict Resolution System
+- 💾 Offline Support
+- 🔒 Secure Data Storage
+
+### User Experience
+- 🌓 Dark/Light Mode Support
+- 📱 Responsive Design
+- ⚡ Real-Time Form Detection
+- 🎨 Clean, Minimalist Interface
+- 🔐 Privacy-First Approach
+
+## Tech Stack
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Supabase
+- SendGrid
+
+## Getting Started
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+ ```
+
+Open http://localhost:3000 with your browser to see the result.
+
+## Browser Extension
+To install the browser extension:
+
+1. Build the extension:
+
+```bash
+npm run build:extension
+ ```
+
+2. Load the extension in Chrome:
+- Open chrome://extensions/
+- Enable Developer mode
+- Click "Load unpacked"
+- Select the extension directory
+Join Waitlist
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

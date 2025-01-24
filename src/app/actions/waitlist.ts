@@ -5,75 +5,81 @@ import { sendgripApiKey } from '@/config/constants'
 
 sgMail.setApiKey(sendgripApiKey)
 
+// Add proper type definition
+interface IContactFormData {
+  name: string;
+  email: string;
+  message?: string;
+}
+
 export async function addToWaitlist(data: IContactFormData) {
   try {
-
-    // Validate input
-    if (!isValidContactData(data)) {
-      return { success: false, message: "invalid input data" }
+    const validationError = isValidContactData(data)
+    if (validationError) {
+      return { success: false, message: validationError }
     }
-
-    // Store submission in Supabase
 
     const supabase = await createClient()
     const response = await supabase
       .from('waitlist')
-      .insert(
-        {
-          email: data.email,
-          name: data.name,
-          message: data.message,
-        },
-      )
-    console.log({ response });
-    const supabaseError = response.error
+      .insert({
+        email: data.email.toLowerCase().trim(),
+        name: data.name.trim(),
+        message: data.message?.trim(),
+      })
 
-    // Send email using SendGrid
-    const msg: sgMail.MailDataRequired = {
-      to: 'business@ajianlabs.com',
-      from: 'noreply@ajianlabs.com',
-      subject: `New Contact Form Submission from ${data.name}`,
-      text: `
-          Name: ${data.name}
-          Email: ${data.email}
-          Phone: ${data.message}
-        `,
-    }
-
-    try {
-      const res = await sgMail.send(msg)
-      console.log({ res });
-    } catch (sendgridError) {
-      console.error('SendGrid error:', sendgridError)
-      // We still return a success response to the user since we saved their message
-      console.log(
-        {
-          success: false,
-          message:
-            'Message received but there was an error sending email notification',
-        })
-    }
-
-    if (supabaseError) {
-      if (supabaseError.details.includes('already exists')) {
-        return { success: false, message: "you're already with us😁" }
+    if (response.error) {
+      if (response.error.details?.includes('already exists')) {
+        return { success: false, message: "You're already with us 😁" }
       }
-      console.error('Supabase error:', supabaseError)
-      return { success: false, message: "whoops, try again😁" }
+      console.error('Supabase error:', response.error)
+      return { success: false, message: "Something went wrong, please try again" }
     }
 
+    // Send email notification
+    try {
+      await sgMail.send({
+        to: 'business@ajianlabs.com',
+        from: 'noreply@ajianlabs.com',
+        subject: `New Waitlist Signup: ${data.name}`,
+        text: `
+Name: ${data.name}
+Email: ${data.email}
+Message: ${data.message || 'No message provided'}
+        `.trim(),
+      })
+    } catch (error) {
+      console.error('SendGrid error:', error)
+      // Continue execution as email notification is not critical
+    }
 
-    return { success: true, message: 'Thank you for joining us.' }
+    return { success: true, message: 'Welcome to YurForms! 🎉' }
   } catch (error) {
     console.error('Unexpected error:', error)
-    return { message: 'An unexpected error occurred', success: false }
+    return { success: false, message: 'Something went wrong, please try again' }
   }
 }
 
-// Helper function to validate input data
-function isValidContactData(data: any): data is IContactFormData {
-  return (
-    typeof data.email === 'string' &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)
-  )
+function isValidContactData(data: any): string | null {
+  if (!data) {
+    return "Invalid form data"
+  }
+
+  if (!data.name || typeof data.name !== 'string' || !data.name.trim()) {
+    return "Please provide your name"
+  }
+
+  if (!data.email || typeof data.email !== 'string') {
+    return "Please provide your email address"
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
+    return "Please provide a valid email address"
+  }
+
+  if (data.message !== undefined && typeof data.message !== 'string') {
+    return "Message must be text"
+  }
+
+  return null
 }

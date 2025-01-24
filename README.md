@@ -1,5 +1,33 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+# YurForms
+
+Fill a form once, use it everywhere. YurForms is a modern solution that streamlines your workflow by eliminating repetitive form filling.
+
+![YurForms](public/globe.svg)
+
+## Overview
+
+YurForms is revolutionizing form management by providing a seamless, efficient way to handle form submissions. Our platform allows users to fill out information once and reuse it across multiple forms, saving valuable time and reducing errors.
+
+## Features
+
+- 🔄 Fill forms once, reuse everywhere
+- 🎨 Minimalist, modern design
+- 🌓 Dark/Light mode support
+- 📱 Fully responsive layout
+- 🔒 Secure data handling
+- ⚡ Built with modern tech stack
+- 🌐 Cross-platform compatibility
+
+## Tech Stack
+
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Supabase
+- SendGrid
+
 ## Getting Started
 
 First, run the development server:

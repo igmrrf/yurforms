@@ -1,5 +1,7 @@
 import { FormField, FieldType } from '@/types/forms';
 import { FieldLearning } from './fieldLearning';
+import { DEFAULT_PATTERNS } from '@/config/constants';
+import { FormAnalysisError } from '@/types/errors';
 
 export class FormAnalyzer {
   private static fieldPatterns = {

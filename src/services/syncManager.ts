@@ -1,5 +1,7 @@
 import { createClient } from "@/config/supabase/client"
 import { UserFormData } from "@/types/forms"
+import { SyncError } from "@/types/errors"
+import { SYNC_INTERVAL } from "@/config/constants"
 import { ConflictResolver } from './conflictResolver'
 
 export class SyncManager {

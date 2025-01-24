@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export type FieldType = 
+export type FieldType =
   | 'text'
   | 'email'
   | 'name'
@@ -24,6 +24,24 @@ export interface FormField {
 
 export interface UserFormData {
   userId: string;
+  fields: {
+    fieldType: FieldType;
+    value: string;
+    lastUsed: Date;
+    frequency: number;
+    contexts: string[];
+  }[];
+}
+
+export interface WebFormField {
+  id: string;
+  label: string;
+  type: string;
+  required: boolean;
+  value?: string;
+}
+
+export interface UserFormData {
   fields: {
     fieldType: FieldType;
     value: string;

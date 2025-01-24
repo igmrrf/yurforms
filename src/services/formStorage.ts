@@ -6,48 +6,34 @@ export class FormStorage {
 
   static async saveFormData(userId: string, field: FormField, value: string) {
     try {
-      const { data: existingData } = await this.supabase
+      const { error } = await this.supabase
         .from('user_form_data')
-        .select('*')
-        .eq('user_id', userId)
-        .eq('field_type', field.type)
-        .single()
-
-      if (existingData) {
-        return await this.supabase
-          .from('user_form_data')
-          .update({
-            field_value: value,
-            frequency: existingData.frequency + 1,
-            last_used: new Date().toISOString(),
-          })
-          .eq('id', existingData.id)
-      }
-
-      return await this.supabase
-        .from('user_form_data')
-        .insert({
+        .upsert({
           user_id: userId,
           field_type: field.type,
           field_value: value,
+          last_used: new Date().toISOString(),
+          frequency: 1,
           contexts: field.context || [],
         })
+
+      if (error) throw error
     } catch (error) {
       console.error('Error saving form data:', error)
-      throw error
+      throw new Error('Failed to save form data')
     }
   }
 
-  static async getUserFormData(userId: string): Promise<UserFormData | null> {
+  static async getUserFormData(userId: string) {
     try {
-      const { data } = await this.supabase
+      const { data, error } = await this.supabase
         .from('user_form_data')
         .select('*')
         .eq('user_id', userId)
 
-      if (!data) return null
+      if (error) throw error
 
-      return {
+      return data ? {
         userId,
         fields: data.map(item => ({
           fieldType: item.field_type,
@@ -56,10 +42,10 @@ export class FormStorage {
           frequency: item.frequency,
           contexts: item.contexts,
         }))
-      }
+      } : null
     } catch (error) {
       console.error('Error fetching user form data:', error)
-      throw error
+      throw new Error('Failed to fetch user form data')
     }
   }
 }

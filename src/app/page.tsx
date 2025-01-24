@@ -67,16 +67,14 @@ export default function Home() {
                 <div className="rounded-2xl sm:rounded-3xl p-6 sm:p-10 bg-gray-50 dark:bg-gray-900 shadow-xl mx-auto border border-gray-100 dark:border-gray-800">
                     {isSuccess ? (
                         <div className="text-center space-y-4">
-                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 mb-4">
-                                <span className="text-2xl">✓</span>
+                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
+                                <span className="text-2xl text-black dark:text-white">✓</span>
                             </div>
                             <h3 className="text-xl font-semibold text-black dark:text-white">
                                 Welcome to YurForms!
                             </h3>
                             <p className="text-gray-600 dark:text-gray-400">
-                                Thank you for joining our waitlist. We'll keep
-                                you updated on our progress and notify you when
-                                we launch.
+                                Thank you for joining our waitlist. We'll keep you updated on our progress and notify you when we launch.
                             </p>
                         </div>
                     ) : (

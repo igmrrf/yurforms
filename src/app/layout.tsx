@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "YurForms",
   description: "YurForms limited Summer On Chain print.",
-  icons: [`${baseUrl}/globe.svg`],
+  icons: [`${baseUrl}/logo.svg`],
   metadataBase: new URL(baseUrl),
   alternates: {
     canonical: baseUrl,
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "YurForms",
     description: "YurForms: Fill a form once and never again",
-    images: `${baseUrl}/globe.svg`,
+    images: `${baseUrl}/logo.svg`,
     url: baseUrl,
     siteName: "YurForms: Fill a form once and never again",
   },

@@ -1,11 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-# YurForms
+# YurForms Built with [TRAE](https://trae.ai)
 
 > Fill forms once, use them everywhere. YurForms streamlines your workflow by eliminating repetitive form filling with a modern, secure, and user-friendly interface.
 
-![YurForms](public/globe.svg)
-Built with [TRAE](https://trae.ai)
+<p align="center">
+  <img src="public/logo.svg" alt="YurForms Logo" width="120" height="120" />
+</p>
 
 ## Features
 
